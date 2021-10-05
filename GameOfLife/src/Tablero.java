@@ -39,20 +39,64 @@ public class Tablero {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		int rows = 3;
+		int cols = 3;
+		
 		frame = new JFrame();
-		
-		
 		frame.setBounds(100, 100, 900, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new GridLayout(30,30));
-		for(int i=0;i<30*30;i++){
-			JPanel panel=new JPanel();
-			panel.setBackground(Color.blue); 
-			Border borde;
-			borde = BorderFactory.createLineBorder(Color.black);
-			panel.setBorder(borde);
-			frame.add(panel); 
+		frame.setLayout(new GridLayout(rows,cols));
+		
+		//Creem els taulells
+
+		
+		int[][] game = new int[rows][cols];
+		JPanel [][] tablero = new JPanel[rows][cols];
+
+		for(int i=0; i<rows; i++) {
+			for(int j=0; j<cols; j++) {
+				game[i][j]= 0;
+				
+				//Inicialitzamos el tablero visual
+				tablero[i][j] = new JPanel();
+				Border borde;
+				borde = BorderFactory.createLineBorder(Color.black);
+				tablero[i][j].setBorder(borde);
+				frame.add(tablero[i][j]);
 			}
+		}
+		
+		game[0][1] = 0;
+		game[1][1] = 1;
+		game[2][1] = 1;
+		
+		String out = "";
+		for(int i=0; i<rows; i++) {
+			for(int j=0; j<cols; j++) {
+				out = out + game[i][j] + " ";
+			}
+			out = out + "\n";
+		}
+		
+		System.out.println(out);
+		
+		
+		
+		
+		for(int i=0;i<rows;i++){
+			for(int j=0;j<cols;j++) {
+				
+				if(game[i][j]==1) {
+					tablero[i][j].setBackground(Color.red); 
+				}else {
+					tablero[i][j].setBackground(Color.blue); 
+				}
+				
+				 
+				
+			}
+		}
 	}
 	
 }
