@@ -48,17 +48,14 @@ public class Tablero {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(rows,cols));
 		
-		//Creem els taulells
-
-		
+		//Creem els taulell imaginari
 		int[][] game = new int[rows][cols];
 		JPanel [][] tablero = new JPanel[rows][cols];
-
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<cols; j++) {
 				game[i][j]= 0;
 				
-				//Inicialitzamos el tablero visual
+				//Inicialitzamos el tablero visual sin color
 				tablero[i][j] = new JPanel();
 				Border borde;
 				borde = BorderFactory.createLineBorder(Color.black);
@@ -67,10 +64,12 @@ public class Tablero {
 			}
 		}
 		
-		game[0][1] = 0;
+		//Pintamos los que queremos y los que no pues nada
+		game[0][1] = 1;
 		game[1][1] = 1;
 		game[2][1] = 1;
 		
+		//Para imprimirlo por terminal
 		String out = "";
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<cols; j++) {
@@ -78,12 +77,9 @@ public class Tablero {
 			}
 			out = out + "\n";
 		}
-		
 		System.out.println(out);
 		
-		
-		
-		
+		//Los 1 pintamos rojo, los demas azul
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<cols;j++) {
 				
@@ -91,12 +87,8 @@ public class Tablero {
 					tablero[i][j].setBackground(Color.red); 
 				}else {
 					tablero[i][j].setBackground(Color.blue); 
-				}
-				
-				 
-				
+				}	
 			}
 		}
 	}
-	
 }
