@@ -42,7 +42,7 @@ public class Tablero {
 		
 		int rows = 3;
 		int cols = 3;
-		
+		int contador=0;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 900, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,26 +69,33 @@ public class Tablero {
 		game[1][1] = 1;
 		game[2][1] = 1;
 		
+		
 		//Para imprimirlo por terminal
 		String out = "";
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<cols; j++) {
 				out = out + game[i][j] + " ";
+				if(game[i][j]==1) {
+					contador++;
+				}
 			}
 			out = out + "\n";
 		}
 		System.out.println(out);
+		System.out.println(contador);
 		
 		//Los 1 pintamos rojo, los demas azul
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<cols;j++) {
 				
 				if(game[i][j]==1) {
-					tablero[i][j].setBackground(Color.red); 
+					tablero[i][j].setBackground(Color.red);
+					
+					
 				}else {
 					tablero[i][j].setBackground(Color.blue); 
 				}	
 			}
-		}
+		}		
 	}
 }
