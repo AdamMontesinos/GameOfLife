@@ -45,8 +45,8 @@ public class Tablero {
 	 */
 	private void initialize() {
 		
-		int rows = 3;
-		int cols = 3;
+		int rows = 100;
+		int cols = 100;
 		int contador=0;
 		
 		frame = new JFrame();
@@ -60,7 +60,7 @@ public class Tablero {
 		frame.getContentPane().add(panelBoton);
 		
 		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(0, -20, 914, 836);
+		panelJuego.setBounds(0, 0, 900, 900);
 		frame.getContentPane().add(panelJuego);
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		panelBoton.setLayout(null);
