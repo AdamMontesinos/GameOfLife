@@ -56,6 +56,8 @@ public class Tablero {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		
+		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
 		panelBoton.setBackground(Color.DARK_GRAY);
 		panelBoton.setBounds(0, 811, 900, 52);
@@ -67,6 +69,7 @@ public class Tablero {
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		panelBoton.setLayout(null);
 		
+		//Botones y cosas
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
 		btnPlay.setBounds(30, 15, 64, 25);
@@ -81,8 +84,10 @@ public class Tablero {
 		btnRandom.setBackground(Color.YELLOW);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
+		
 		btnRandom.setBounds(230, 15, 91, 25);
 		panelBoton.add(btnRandom);
 		
@@ -103,6 +108,13 @@ public class Tablero {
 		JSpinner spinner_1 = new JSpinner();
 		spinner_1.setBounds(509, 15, 35, 25);
 		panelBoton.add(spinner_1);
+		
+		JLabel lblCounter = new JLabel("Counter :");
+		lblCounter.setForeground(Color.YELLOW);
+		lblCounter.setBounds(633, 20, 1000, 15);
+		panelBoton.add(lblCounter);
+		
+		
 		
 		//Creem els taulell imaginari
 		int[][] game = new int[rows][cols];
@@ -150,6 +162,9 @@ public class Tablero {
 					tablero[i][j].setBackground(Color.blue); 
 				}	
 			}
-		}		
+		}
+		
+		//Print en Menu
+		lblCounter.setText(String.valueOf("Counter : " + contador));
 	}
 }
