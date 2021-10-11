@@ -55,7 +55,7 @@ public class Tablero {
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panelBoton = new JPanel();
-		panelBoton.setBackground(Color.YELLOW);
+		panelBoton.setBackground(Color.DARK_GRAY);
 		panelBoton.setBounds(0, 811, 900, 52);
 		frame.getContentPane().add(panelBoton);
 		
@@ -66,14 +66,17 @@ public class Tablero {
 		panelBoton.setLayout(null);
 		
 		JButton btnPlay = new JButton("Play");
+		btnPlay.setBackground(Color.YELLOW);
 		btnPlay.setBounds(136, 15, 64, 25);
 		panelBoton.add(btnPlay);
 		
 		JButton btnClear = new JButton("Clear");
+		btnClear.setBackground(Color.YELLOW);
 		btnClear.setBounds(414, 15, 71, 25);
 		panelBoton.add(btnClear);
 		
 		JButton btnRandom = new JButton("Random");
+		btnRandom.setBackground(Color.YELLOW);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -86,7 +89,13 @@ public class Tablero {
 		JPanel [][] tablero = new JPanel[rows][cols];
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<cols; j++) {
-				game[i][j]= 0;
+			
+				//Para Random
+				int red = 1;
+				int blue = 0;
+				
+				int random_int = (int)Math.floor(Math.random()*(red-blue+1)+blue);
+				game[i][j]= random_int;
 				
 				//Inicialitzamos el tablero visual sin color
 				tablero[i][j] = new JPanel();
@@ -96,11 +105,6 @@ public class Tablero {
 				panelJuego.add(tablero[i][j]);
 			}
 		}
-		
-		//Pintamos los que queremos y los que no pues nada
-		game[0][1] = 1;
-		game[1][1] = 1;
-		game[2][1] = 1;
 		
 		//Para imprimirlo por terminal
 		String out = "";
