@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
 public class Tablero {
 
@@ -54,16 +55,31 @@ public class Tablero {
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panelBoton = new JPanel();
-		panelBoton.setBounds(0, 1, 900, 287);
+		panelBoton.setBackground(Color.YELLOW);
+		panelBoton.setBounds(0, 811, 900, 52);
 		frame.getContentPane().add(panelBoton);
 		
-		JButton btnNewButton = new JButton("New button");
-		panelBoton.add(btnNewButton);
-		
 		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(0, 288, 900, 287);
+		panelJuego.setBounds(0, -20, 914, 836);
 		frame.getContentPane().add(panelJuego);
 		panelJuego.setLayout(new GridLayout(rows, cols));
+		panelBoton.setLayout(null);
+		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.setBounds(136, 15, 64, 25);
+		panelBoton.add(btnPlay);
+		
+		JButton btnClear = new JButton("Clear");
+		btnClear.setBounds(414, 15, 71, 25);
+		panelBoton.add(btnClear);
+		
+		JButton btnRandom = new JButton("Random");
+		btnRandom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnRandom.setBounds(690, 15, 91, 25);
+		panelBoton.add(btnRandom);
 		
 		//Creem els taulell imaginari
 		int[][] game = new int[rows][cols];
