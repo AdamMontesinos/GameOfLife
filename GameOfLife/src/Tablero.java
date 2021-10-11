@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import javax.swing.JSpinner;
+import javax.swing.JLabel;
 
 public class Tablero {
 
@@ -67,12 +69,12 @@ public class Tablero {
 		
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
-		btnPlay.setBounds(136, 15, 64, 25);
+		btnPlay.setBounds(30, 15, 64, 25);
 		panelBoton.add(btnPlay);
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
-		btnClear.setBounds(414, 15, 71, 25);
+		btnClear.setBounds(130, 15, 71, 25);
 		panelBoton.add(btnClear);
 		
 		JButton btnRandom = new JButton("Random");
@@ -81,8 +83,26 @@ public class Tablero {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnRandom.setBounds(690, 15, 91, 25);
+		btnRandom.setBounds(230, 15, 91, 25);
 		panelBoton.add(btnRandom);
+		
+		JLabel lblNewLabel = new JLabel("Width :");
+		lblNewLabel.setForeground(Color.YELLOW);
+		lblNewLabel.setBounds(350, 20, 70, 15);
+		panelBoton.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Height :");
+		lblNewLabel_1.setForeground(Color.YELLOW);
+		lblNewLabel_1.setBounds(450, 20, 70, 15);
+		panelBoton.add(lblNewLabel_1);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(405, 15, 35, 25);
+		panelBoton.add(spinner);
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setBounds(509, 15, 35, 25);
+		panelBoton.add(spinner_1);
 		
 		//Creem els taulell imaginari
 		int[][] game = new int[rows][cols];
