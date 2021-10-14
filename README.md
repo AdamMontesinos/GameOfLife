@@ -28,7 +28,7 @@ The initial pattern constitutes the seed of the system. The first generation is 
 	
 	· Creation of universe
 	
-	· Loading Scenes
+	· Load of scenes
 	
 	· Visualization of universe
 
