@@ -1,6 +1,8 @@
 # GameOfLife
 Adam Montesinos , Miguel Pan , Laura Martin , Eric Salvatierra , Jhoel Pacheco DAM2
 
+
+
 - DESCRIPTION 
 
   The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970.It is a zero-player game,     meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves. 
@@ -16,9 +18,15 @@ Any dead cell with three live neighbours becomes a live cell.
 All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed, live or dead; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations.
 
+
+
 - TECNOLOGIES
 
+
+
 - OBJECTIVES
+
+
 
   DONE : 
   
@@ -37,7 +45,9 @@ The initial pattern constitutes the seed of the system. The first generation is 
   
   NOT DONE :
   
+  
   PROBLEMS : 
+  
   
 - ORGANIZATION :
   
