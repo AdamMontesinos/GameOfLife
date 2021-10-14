@@ -21,10 +21,14 @@ The initial pattern constitutes the seed of the system. The first generation is 
 - OBJECTIVES
 
   DONE : 
-  · Randomization button
+ 	· Randomization button
+	
 	· Counter
+	
 	· Creation of universe
+	
 	· Loading Scenes
+	
 	· Visualization of universe
 
   
