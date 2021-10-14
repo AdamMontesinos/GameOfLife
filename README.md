@@ -22,15 +22,17 @@ The initial pattern constitutes the seed of the system. The first generation is 
 
   DONE : 
   
- 	· Randomization button
+ 	· Creation of universe
+	
+	· Visualization of universe
+	
+	· Loading Scenes
+	
+	· Menu
 	
 	· Counter
 	
-	· Creation of universe
-	
-	· Load of scenes
-	
-	· Visualization of universe
+	· Random Start
 
   
   NOT DONE :
