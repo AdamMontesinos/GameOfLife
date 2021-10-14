@@ -30,8 +30,7 @@ The initial pattern constitutes the seed of the system. The first generation is 
 
   DONE : 
   
- 	· Creation of universe
-	· Visualization of universe
+ 	· Creation of universe																		· Visualization of universe
 	· Loading Scenes
 	· Menu
 	· Counter
