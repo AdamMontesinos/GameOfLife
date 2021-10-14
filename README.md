@@ -40,6 +40,8 @@ The initial pattern constitutes the seed of the system. The first generation is 
   
   NOT DONE :
   
+  	· Start/Stop of game
+  
   
   PROBLEMS : 
   
