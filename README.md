@@ -5,4 +5,10 @@
 
 - TECNOLOGIES
 
-HOLA 
+- OBJECTIVES
+
+  DONE :
+  
+  NOT DONE :
+  
+  PROBLEMS : 
