@@ -22,6 +22,7 @@ The initial pattern constitutes the seed of the system. The first generation is 
 
 - TECNOLOGIES
 
+	Java Swing, Window Builder libraries, Eclipse.
 
 
 - OBJECTIVES
