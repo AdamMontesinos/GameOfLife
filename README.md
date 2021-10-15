@@ -50,6 +50,8 @@ The initial pattern constitutes the seed of the system. The first generation is 
   
   PROBLEMS : 
   
+  	· Structure problems with Start/Play the game
+  
   
 # ORGANIZATION :
   
