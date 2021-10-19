@@ -16,8 +16,8 @@ import javax.swing.JSpinner;
 import javax.swing.JLabel;
 
 public class Tablero {
-	private final int rows = 3;
-	private final int cols = 3;
+	private final int rows = 6;
+	private final int cols = 6;
 	private int contador = 0;
 
 	private JFrame frame;
@@ -74,6 +74,8 @@ public class Tablero {
 		frame.getContentPane().add(panelJuego);
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		
+		JLabel lblCounter = new JLabel("Counter :");
+		
 		//Botones y cosas
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
@@ -81,7 +83,7 @@ public class Tablero {
 		panelBoton.add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				inicializar(panelJuego, panelBoton);
+				inicializar(panelJuego, panelBoton,lblCounter);
 				contador=0;
 				
 			}
@@ -103,6 +105,9 @@ public class Tablero {
 		btnRandom.setBounds(230, 15, 91, 25);
 		panelBoton.add(btnRandom);
 		
+		
+		
+		
 		JLabel lblNewLabel = new JLabel("Width :");
 		lblNewLabel.setForeground(Color.YELLOW);
 		lblNewLabel.setBounds(350, 20, 70, 15);
@@ -121,7 +126,6 @@ public class Tablero {
 		spinner_1.setBounds(509, 15, 35, 25);
 		panelBoton.add(spinner_1);
 		
-		JLabel lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
 		lblCounter.setBounds(633, 20, 1000, 15);
 		panelBoton.add(lblCounter);
@@ -131,10 +135,10 @@ public class Tablero {
 		
 		
 		//Print en Menu
-		lblCounter.setText(String.valueOf("Counter : " + contador));
+		
 
 	}
-	private void inicializar(JPanel panelJuego, JPanel panelBoton) {
+	private void inicializar(JPanel panelJuego, JPanel panelBoton,JLabel lblCounter) {
 		//Creem els taulell imaginari
 				int[][] game = new int[rows][cols];
 				JPanel [][] tablero = new JPanel[rows][cols];
@@ -142,34 +146,69 @@ public class Tablero {
 					for(int j=0; j<cols; j++) {
 					
 						//Para Random
-						int red = 1;
-						int blue = 0;
+						//int red = 1;
+						//int blue = 0;
 						
-						int random_int = (int)Math.floor(Math.random()*(red-blue+1)+blue);
-						game[i][j]= random_int;
+						//int random_int = (int)Math.floor(Math.random()*(red-blue+1)+blue);
+						//game[i][j]= random_int;
+						game[0][1] = 1;
+						game[1][1] = 1;
+						game[2][1] = 1;
+						
+						
+						int top, bottom, left, right;
+						if(i-1<0) {
+							top = 0;
+						}else {
+							top = i-1;
+						}
+						
+						if(i+1>rows-1) {
+							bottom = rows-1;
+						}else {
+							bottom = i+1;
+						}
+						
+						if(j-1<0) {
+							left = 0;
+						}else {
+							left = j-1;
+						}
+						
+						if(j+1>cols-1) {
+							right = cols-1;
+						}else {
+							right = j+1;
+						}
+						
+						
+						System.out.println(" top "+top + " --- " + bottom + " bottom " );
+						System.out.println(" left " + left + " --- " + right+ " right ");
 						
 						//Inicialitzamos el tablero visual sin color
 						tablero[i][j] = new JPanel();
 						Border borde;
 						borde = BorderFactory.createLineBorder(Color.black);
 						tablero[i][j].setBorder(borde);
-					
+						
 						
 						panelJuego.add(tablero[i][j]);						
 						
 						
 					}
 					
+					
 				}
-				this.frame.setVisible(true);
-
-
 				
+
+
+				this.frame.setVisible(true);
 				imprimir_logico(game);
-				imprimir_visual(game, tablero);
+				imprimir_visual(game, tablero,lblCounter);
+				
 	}
 	
-	private void imprimir_visual(int[][] game, JPanel[][] tablero) {
+	private void imprimir_visual(int[][] game, JPanel[][] tablero,JLabel lblCounter) {
 		//Los 1 pintamos rojo, los demas azul
 				for(int i=0;i<rows;i++){
 					for(int j=0;j<cols;j++) {
@@ -181,6 +220,8 @@ public class Tablero {
 						}
 					}	
 				}
+		lblCounter.setText(String.valueOf("Counter : " + contador));
+				
 	}
 	
 	private void imprimir_logico(int[][] game) {
