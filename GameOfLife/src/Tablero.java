@@ -22,7 +22,8 @@ public class Tablero {
 	private int cols = 100;
 	private int contador=0;
 	private int[][] game;
-	
+	private int width;
+	private int heigth;
 	/**
 	 * Launch the application.
 	 */
@@ -88,7 +89,7 @@ public class Tablero {
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				generateRandomBoard(panelJuego);
-				juego.consolePrintBoard(rows,cols,game,contador);
+				juego.consolePrintBoard(rows,cols,game,contador,width,heigth);
 			}
 		});
 		
@@ -108,19 +109,20 @@ public class Tablero {
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(405, 15, 35, 25);
 		panelBoton.add(spinner);
-		//int width = (Integer) spinner.getValue();
+		width = (Integer) spinner.getValue();
+		
 		
 		JSpinner spinner_1 = new JSpinner();
 		spinner_1.setBounds(509, 15, 35, 25);
 		panelBoton.add(spinner_1);
-		//int heigth = (Integer) spinner.getValue();
+		heigth = (Integer) spinner_1.getValue();
 		
 		JLabel lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
 		lblCounter.setBounds(633, 20, 1000, 15);
 		panelBoton.add(lblCounter);
 		
-		juego.consolePrintBoard(rows,cols,game,contador);
+		juego.consolePrintBoard(rows,cols,game,contador,width,heigth);
 		
 
 		//Print en Menu
@@ -157,6 +159,10 @@ public class Tablero {
 				panelJuego.setVisible(true);
 			}
 		}
+	}
+	
+	public void cambiarTamaño() {
+		
 	}
 
 	
