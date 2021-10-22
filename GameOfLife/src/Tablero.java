@@ -18,8 +18,8 @@ import javax.swing.JLabel;
 public class Tablero {
 
 	private JFrame frame;
-	private int rows = 100; 
-	private int cols = 100;
+	private int rows = 3; 
+	private int cols = 3;
 	private int contador=0;
 	private int[][] game;
 	private int width;
@@ -68,7 +68,7 @@ public class Tablero {
 		frame.getContentPane().add(panelBoton);
 		
 		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(0, 0, 900, 900);
+		panelJuego.setBounds(0, 0, 900, 814);
 		frame.getContentPane().add(panelJuego);
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		panelBoton.setLayout(null);
@@ -143,7 +143,7 @@ public class Tablero {
 				int random_int = (int)Math.floor(Math.random()*(red-blue+1)+blue);
 				game[i][j]= random_int;
 				
-				//Inicialitzamos el tablero visual sin color
+				//Inicialitzamos el tablero visual 
 				tablero[i][j] = new JPanel();
 				Border borde;
 				borde = BorderFactory.createLineBorder(Color.black);
@@ -157,14 +157,11 @@ public class Tablero {
 				}
 				
 				panelJuego.setVisible(true);
+				
 			}
 		}
-	}
+		this.frame.setVisible(true);
 	
-	public void cambiarTamaño() {
-		
 	}
 
-	
-	
 }
