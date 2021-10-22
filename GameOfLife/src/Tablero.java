@@ -18,8 +18,8 @@ import javax.swing.JLabel;
 public class Tablero {
 
 	private JFrame frame;
-	private int rows = 3; 
-	private int cols = 3;
+	private int rows = 10; 
+	private int cols = 10;
 	private int contador=0;
 	private int[][] game;
 	private int width;
