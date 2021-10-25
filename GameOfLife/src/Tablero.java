@@ -51,9 +51,9 @@ public class Tablero {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		Game juego = new Game();
 
-		game = new int[rows][cols];
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 900, 900);
@@ -70,7 +70,6 @@ public class Tablero {
 		JPanel panelJuego = new JPanel();
 		panelJuego.setBounds(0, 0, 900, 814);
 		frame.getContentPane().add(panelJuego);
-		panelJuego.setLayout(new GridLayout(rows, cols));
 		panelBoton.setLayout(null);
 		
 		//Botones y cosas
@@ -81,15 +80,36 @@ public class Tablero {
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClearBoard(panelJuego);
+				juego.consolePrintBoard(rows,cols,game,contador);
+			}
+		});
 		btnClear.setBounds(130, 15, 71, 25);
 		panelBoton.add(btnClear);
+		
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(405, 15, 35, 25);
+		panelBoton.add(spinner);
+		
+		
+		JSpinner spinner_1 = new JSpinner();
+		spinner_1.setBounds(509, 15, 35, 25);
+		panelBoton.add(spinner_1);
+		
 		
 		JButton btnRandom = new JButton("Random");
 		btnRandom.setBackground(Color.YELLOW);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				generateRandomBoard(panelJuego);
-				juego.consolePrintBoard(rows,cols,game,contador,width,heigth);
+				rows = (Integer) spinner.getValue();
+				cols = (Integer) spinner_1.getValue();
+				game = new int[rows][cols];
+				
+				generateRandomBoard(panelJuego, rows, cols);
+				juego.consolePrintBoard(rows,cols,game,contador);
 			}
 		});
 		
@@ -106,32 +126,26 @@ public class Tablero {
 		lblNewLabel_1.setBounds(450, 20, 70, 15);
 		panelBoton.add(lblNewLabel_1);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(405, 15, 35, 25);
-		panelBoton.add(spinner);
-		width = (Integer) spinner.getValue();
 		
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(509, 15, 35, 25);
-		panelBoton.add(spinner_1);
-		heigth = (Integer) spinner_1.getValue();
 		
 		JLabel lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
 		lblCounter.setBounds(633, 20, 1000, 15);
 		panelBoton.add(lblCounter);
 		
-		juego.consolePrintBoard(rows,cols,game,contador,width,heigth);
+		//juego.consolePrintBoard(rows,cols,game,contador);
 		
 
 		//Print en Menu
 		lblCounter.setText(String.valueOf("Counter : " + contador));
 	}
 	
-	public void generateRandomBoard(JPanel panelJuego) {
+
+	public void generateRandomBoard(JPanel panelJuego, int rows, int cols) {
 		//Creem els taulell imaginari
-		
+		panelJuego.removeAll();
+		panelJuego.setLayout(new GridLayout(rows, cols));
+
 		JPanel [][] tablero = new JPanel[rows][cols];
 		for(int i=0; i<rows; i++) {
 			for(int j=0; j<cols; j++) {
@@ -158,6 +172,35 @@ public class Tablero {
 				
 				panelJuego.setVisible(true);
 				
+			}
+		}
+		this.frame.setVisible(true);
+	
+	}
+	
+	public void ClearBoard(JPanel panelJuego) {
+		panelJuego.removeAll();
+
+		//Creem els taulell imaginari
+		JPanel [][] tablero = new JPanel[rows][cols];
+		for(int i=0; i<rows; i++) {
+			for(int j=0; j<cols; j++) {
+				int red = 1;
+				int blue = 0;
+			
+				game[i][j]= blue;
+				
+				
+				//Inicialitzamos el tablero visual 
+				tablero[i][j] = new JPanel();
+				Border borde;
+				borde = BorderFactory.createLineBorder(Color.black);
+				tablero[i][j].setBorder(borde);
+				panelJuego.add(tablero[i][j]);
+				
+				tablero[i][j].setBackground(Color.blue); 
+					
+				panelJuego.setVisible(true);
 			}
 		}
 		this.frame.setVisible(true);

@@ -4,7 +4,7 @@ public class Game {
 		
 	}
 
-	public void consolePrintBoard(int rows, int cols, int game [][], int contador,int width , int heigth) {
+	public void consolePrintBoard(int rows, int cols, int game [][], int contador) {
 		//Para imprimirlo por terminal
 		String out = "";
 		for(int i=0; i<rows; i++) {
@@ -18,7 +18,6 @@ public class Game {
 		}
 		System.out.println(out);
 		System.out.println("Contador : " + contador);
-		System.out.println("Width : " + width);
-		System.out.println("Heigth : " + heigth);
+		
 	}
 }
