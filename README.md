@@ -34,23 +34,36 @@ The initial pattern constitutes the seed of the system. The first generation is 
 	
 	· Visualization of universe
 	
-	· Loading Scenes
+	· Loading scenes
 	
 	· Menu
 	
 	· Counter
 	
-	· Random Start
-
-  
+	· SubMenu
+	
+	
+	· Adjust size
+	
+	· Clear Button
+	
+	· Random Paint
+	
+	
   NOT DONE :
   
   	· Start/Stop of game
   
+  	· Change speed of game
+	
+	· Paint boxes
+	
+	· Import/Export files
   
   PROBLEMS : 
   
   	· Structure problems with Start/Play the game
+	
   
   
 # ORGANIZATION :
