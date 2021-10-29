@@ -42,12 +42,13 @@ The initial pattern constitutes the seed of the system. The first generation is 
 	
 	· SubMenu
 	
-	
 	· Adjust size
 	
 	· Clear Button
 	
 	· Random Paint
+	
+	· Stop/Play
 	
 	
   NOT DONE :
