@@ -58,6 +58,7 @@ public class Tablero implements ActionListener{
 		
 		//inicializamos antes para evitar crear multiples instancias del timer
 		inicializar();
+		
 
 		
 		frame = new JFrame();
@@ -68,7 +69,7 @@ public class Tablero implements ActionListener{
 		JPanel panelJuego = new JPanel();
 		panelJuego.setBounds(0, 0, 870, 527);
 		frame.getContentPane().add(panelJuego);
-		
+		juego(panelJuego);
 		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
@@ -84,7 +85,6 @@ public class Tablero implements ActionListener{
 		panelBoton.add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				juego(panelJuego);
 				timer.start();
 			}
 		});
@@ -95,7 +95,6 @@ public class Tablero implements ActionListener{
 		panelBoton.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				juego(panelJuego);
 				timer.stop();
 				ClearCellsMap(cellsMap);
 				timer.start();
@@ -109,7 +108,6 @@ public class Tablero implements ActionListener{
 		panelBoton.add(btnRandom);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				juego(panelJuego);
 				//iniciamos la instacia del timer para que pueda rellenas las celdas de la matriz
 				timer.start();
 				cellsMap = RandomAutofill(cellsMap);
@@ -123,7 +121,6 @@ public class Tablero implements ActionListener{
 		panelBoton.add(btnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				juego(panelJuego);
 				timer.stop();
 			}
 		});
