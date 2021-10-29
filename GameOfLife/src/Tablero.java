@@ -19,8 +19,8 @@ import javax.swing.JLabel;
 public class Tablero implements ActionListener{
 
 	private JFrame frame;
-	private final int rows =10; 
-	private int cols =10;
+	private int rows; 
+	private int cols;
 	private int contador=0;
 	private int[][] game;
 	boolean cellsMap[][];
@@ -69,7 +69,8 @@ public class Tablero implements ActionListener{
 		JPanel panelJuego = new JPanel();
 		panelJuego.setBounds(0, 0, 870, 527);
 		frame.getContentPane().add(panelJuego);
-		juego(panelJuego);
+		
+		
 		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
@@ -78,6 +79,37 @@ public class Tablero implements ActionListener{
 		frame.getContentPane().add(panelBoton);
 		panelBoton.setLayout(null);
 		
+		
+		//spinners para escoger el numero de celulas
+		
+		JSpinner spinnerWidth = new JSpinner();
+		spinnerWidth.setBounds(578, 15, 35, 25);
+		panelBoton.add(spinnerWidth);
+		//valor por defecto para el tamaño
+		spinnerWidth.setValue(3);
+		//rows = (Integer) spinnerWidth.getValue();
+		
+		JSpinner spinnerHeight = new JSpinner();
+		spinnerHeight.setBounds(690, 15, 35, 25);
+		panelBoton.add(spinnerHeight);
+		//valor por defecto para el tamaño
+		spinnerHeight.setValue(3);
+		//cols = (Integer) spinnerHeight.getValue();
+		
+		//Label de los spinners
+		JLabel lblWidth = new JLabel("Width :");
+		lblWidth.setForeground(Color.YELLOW);
+		lblWidth.setBounds(496, 20, 70, 15);
+		panelBoton.add(lblWidth);
+		
+		JLabel lblHeight = new JLabel("Height :");
+		lblHeight.setForeground(Color.YELLOW);
+		lblHeight.setBounds(633, 20, 70, 15);
+		panelBoton.add(lblHeight);
+		
+		
+		
+		
 		//Botones y cosas
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
@@ -85,6 +117,9 @@ public class Tablero implements ActionListener{
 		panelBoton.add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				rows = (Integer) spinnerWidth.getValue();
+				cols = (Integer) spinnerHeight.getValue();
+				juego(panelJuego, rows, cols);
 				timer.start();
 			}
 		});
@@ -125,28 +160,6 @@ public class Tablero implements ActionListener{
 			}
 		});
 		
-		//spinners
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(578, 15, 35, 25);
-		panelBoton.add(spinner);
-		
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(690, 15, 35, 25);
-		panelBoton.add(spinner_1);
-		
-		
-		JLabel lblNewLabel = new JLabel("Width :");
-		lblNewLabel.setForeground(Color.YELLOW);
-		lblNewLabel.setBounds(496, 20, 70, 15);
-		panelBoton.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Height :");
-		lblNewLabel_1.setForeground(Color.YELLOW);
-		lblNewLabel_1.setBounds(633, 20, 70, 15);
-		panelBoton.add(lblNewLabel_1);
-		
 		
 		//contador de celulas vivas
 		JLabel lblCounter = new JLabel("Counter :");
@@ -163,7 +176,7 @@ public class Tablero implements ActionListener{
 		
 	}
 	
-	public void juego(JPanel panelJuego) {
+	public void juego(JPanel panelJuego, int rows, int cols) {
 		panelJuego.removeAll();
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		
