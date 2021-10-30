@@ -1,10 +1,9 @@
+package gol;
+
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -62,71 +61,81 @@ public class Tablero implements ActionListener{
 
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 896, 635);
+		frame.setBounds(100, 100, 805, 634);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(0, 0, 870, 527);
+		panelJuego.setBounds(0, 0, 789, 502);
 		frame.getContentPane().add(panelJuego);
 		
 		
 		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
-		panelBoton.setBounds(0, 538, 870, 58);
+		panelBoton.setBounds(0, 502, 789, 93);
 		panelBoton.setBackground(Color.DARK_GRAY);
 		frame.getContentPane().add(panelBoton);
 		panelBoton.setLayout(null);
 		
 		
 		//spinners para escoger el numero de celulas
-		
 		JSpinner spinnerWidth = new JSpinner();
-		spinnerWidth.setBounds(578, 15, 35, 25);
+		spinnerWidth.setBounds(50, 15, 35, 25);
 		panelBoton.add(spinnerWidth);
-		//valor por defecto para el tamaño
+		//valor por defecto para el tamaï¿½o
 		spinnerWidth.setValue(3);
-		//rows = (Integer) spinnerWidth.getValue();
 		
 		JSpinner spinnerHeight = new JSpinner();
-		spinnerHeight.setBounds(690, 15, 35, 25);
+		spinnerHeight.setBounds(138, 15, 35, 25);
 		panelBoton.add(spinnerHeight);
-		//valor por defecto para el tamaño
+		//valor por defecto para el tamaÃ±o
 		spinnerHeight.setValue(3);
-		//cols = (Integer) spinnerHeight.getValue();
 		
 		//Label de los spinners
 		JLabel lblWidth = new JLabel("Width :");
 		lblWidth.setForeground(Color.YELLOW);
-		lblWidth.setBounds(496, 20, 70, 15);
+		lblWidth.setBounds(10, 20, 58, 15);
 		panelBoton.add(lblWidth);
 		
 		JLabel lblHeight = new JLabel("Height :");
 		lblHeight.setForeground(Color.YELLOW);
-		lblHeight.setBounds(633, 20, 70, 15);
+		lblHeight.setBounds(95, 20, 70, 15);
 		panelBoton.add(lblHeight);
 		
 		
 		
 		
 		//Botones y cosas
-		JButton btnPlay = new JButton("Play");
-		btnPlay.setBackground(Color.YELLOW);
-		btnPlay.setBounds(30, 15, 64, 25);
-		panelBoton.add(btnPlay);
-		btnPlay.addActionListener(new ActionListener() {
+		
+		//btnCreateUniverse creara el tablero, no lo iniciara
+		JButton btnCreateUniverse = new JButton("Create Universe");
+		btnCreateUniverse.setBackground(Color.YELLOW);
+		btnCreateUniverse.setBounds(10, 51, 163, 25);
+		panelBoton.add(btnCreateUniverse);
+		btnCreateUniverse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				panelJuego.removeAll();
 				rows = (Integer) spinnerWidth.getValue();
 				cols = (Integer) spinnerHeight.getValue();
 				juego(panelJuego, rows, cols);
+			}
+		});
+		
+		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.setBackground(Color.YELLOW);
+		btnPlay.setBounds(220, 37, 64, 25);
+		panelBoton.add(btnPlay);
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				timer.start();
 			}
 		});
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
-		btnClear.setBounds(130, 15, 71, 25);
+		btnClear.setBounds(314, 37, 71, 25);
 		panelBoton.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -139,7 +148,7 @@ public class Tablero implements ActionListener{
 		
 		JButton btnRandom = new JButton("Random");
 		btnRandom.setBackground(Color.YELLOW);
-		btnRandom.setBounds(230, 15, 91, 25);
+		btnRandom.setBounds(411, 37, 91, 25);
 		panelBoton.add(btnRandom);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -152,7 +161,7 @@ public class Tablero implements ActionListener{
 		
 		JButton btnStop = new JButton("Stop");
 		btnStop.setBackground(Color.YELLOW);
-		btnStop.setBounds(353, 15, 91, 25);
+		btnStop.setBounds(526, 37, 79, 25);
 		panelBoton.add(btnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -164,7 +173,7 @@ public class Tablero implements ActionListener{
 		//contador de celulas vivas
 		JLabel lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
-		lblCounter.setBounds(769, 20, 91, 15);
+		lblCounter.setBounds(681, 42, 91, 15);
 		panelBoton.add(lblCounter);
 		
 		//juego.consolePrintBoard(rows,cols,game,contador);
@@ -177,11 +186,12 @@ public class Tablero implements ActionListener{
 	}
 	
 	public void juego(JPanel panelJuego, int rows, int cols) {
-		panelJuego.removeAll();
+		//panelJuego.removeAll();
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		
 		//juego
 		cellsMap = new boolean [rows][cols];
+		//cellsMap = ClearCellsMap(cellsMap);
 		
 		//pintar de manera manual para el ejemplo de 3x3
 		//cellsMap[0][1] = true;
@@ -191,9 +201,9 @@ public class Tablero implements ActionListener{
 		//celulas
 		cells = new JButton[rows][cols];
 		
-		
 		for(int i=0;i<rows;i++) {
 			for(int j=0;j<cols;j++) {
+				
 				//tablero de botones temporal
 				JButton temp = new JButton();
 				if(cellsMap[i][j]) {
@@ -222,7 +232,20 @@ public class Tablero implements ActionListener{
 				for(int i=0;i<rows;i++) {
 					for(int j=0;j<cols;j++) {
 						int count = countNeignours(i,j);
+
 						
+						//la funcion de clickar y cambiar de estado aun no funciona
+						//pero este codigo va masomenos encaminado
+						
+						/*if(cells[i][j].isEnabled()) {
+							if(cellsMap[i][j]) {
+								cellsMap[i][j] = false;
+							}else {
+								cellsMap[i][j] = true;
+							}
+						}*/
+						
+	
 						//reglas del juego
 						if(cellsMap[i][j]) {
 							//celula viva, puede continuar con vida? (0-1)
