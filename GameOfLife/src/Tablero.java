@@ -1,29 +1,30 @@
+
 import java.awt.EventQueue;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-
-import org.w3c.dom.events.MouseEvent;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Random;
+
 import javax.swing.JSpinner;
+import javax.swing.Timer;
 import javax.swing.JLabel;
 
-public class Tablero {
+public class Tablero implements ActionListener{
 
 	private JFrame frame;
+	private JLabel lblCounter;
 	private int rows; 
 	private int cols;
-	private int contador=0;
+	private int contador;
 	private int[][] game;
-	private int width;
-	private int heigth;
+	boolean cellsMap[][];
+	JButton cells[][];
+	Timer timer = null;
 	/**
 	 * Launch the application.
 	 */
@@ -53,158 +54,289 @@ public class Tablero {
 	private void initialize() {
 		
 		Game juego = new Game();
+		
+		//inicializamos antes para evitar crear multiples instancias del timer
+		inicializar();
+		
 
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 900, 900);
+		frame.setBounds(100, 100, 805, 634);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JPanel panelJuego = new JPanel();
+		panelJuego.setBounds(0, 0, 789, 502);
+		frame.getContentPane().add(panelJuego);
+		
 		
 		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
+		panelBoton.setBounds(0, 502, 789, 93);
 		panelBoton.setBackground(Color.DARK_GRAY);
-		panelBoton.setBounds(0, 811, 900, 52);
 		frame.getContentPane().add(panelBoton);
-		
-		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(0, 0, 900, 814);
-		frame.getContentPane().add(panelJuego);
 		panelBoton.setLayout(null);
 		
+		
+		//spinners para escoger el numero de celulas
+		JSpinner spinnerWidth = new JSpinner();
+		spinnerWidth.setBounds(50, 15, 35, 25);
+		panelBoton.add(spinnerWidth);
+		//valor por defecto para el tama�o
+		spinnerWidth.setValue(3);
+		
+		JSpinner spinnerHeight = new JSpinner();
+		spinnerHeight.setBounds(138, 15, 35, 25);
+		panelBoton.add(spinnerHeight);
+		//valor por defecto para el tamaño
+		spinnerHeight.setValue(3);
+		
+		//Label de los spinners
+		JLabel lblWidth = new JLabel("Width :");
+		lblWidth.setForeground(Color.YELLOW);
+		lblWidth.setBounds(10, 20, 58, 15);
+		panelBoton.add(lblWidth);
+		
+		JLabel lblHeight = new JLabel("Height :");
+		lblHeight.setForeground(Color.YELLOW);
+		lblHeight.setBounds(95, 20, 70, 15);
+		panelBoton.add(lblHeight);
+		
+		
+		
+		
 		//Botones y cosas
+		
+		//btnCreateUniverse creara el tablero, no lo iniciara
+		JButton btnCreateUniverse = new JButton("Create Universe");
+		btnCreateUniverse.setBackground(Color.YELLOW);
+		btnCreateUniverse.setBounds(10, 51, 163, 25);
+		panelBoton.add(btnCreateUniverse);
+		btnCreateUniverse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelJuego.removeAll();
+				panelJuego.updateUI();
+				rows = (Integer) spinnerWidth.getValue();
+				cols = (Integer) spinnerHeight.getValue();
+				juego(panelJuego, rows, cols);
+			}
+		});
+		
+		
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
-		btnPlay.setBounds(30, 15, 64, 25);
+		btnPlay.setBounds(220, 37, 64, 25);
 		panelBoton.add(btnPlay);
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				timer.start();
+			}
+		});
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
+		btnClear.setBounds(314, 37, 71, 25);
+		panelBoton.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClearBoard(panelJuego);
-				juego.consolePrintBoard(rows,cols,game,contador);
+				timer.stop();
+				ClearCellsMap(cellsMap);
+				timer.start();
 			}
 		});
-		btnClear.setBounds(130, 15, 71, 25);
-		panelBoton.add(btnClear);
-		
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(405, 15, 35, 25);
-		panelBoton.add(spinner);
-		
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(509, 15, 35, 25);
-		panelBoton.add(spinner_1);
 		
 		
 		JButton btnRandom = new JButton("Random");
 		btnRandom.setBackground(Color.YELLOW);
+		btnRandom.setBounds(411, 37, 91, 25);
+		panelBoton.add(btnRandom);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				rows = (Integer) spinner.getValue();
-				cols = (Integer) spinner_1.getValue();
-				game = new int[rows][cols];
-				
-				generateRandomBoard(panelJuego, rows, cols);
-				juego.consolePrintBoard(rows,cols,game,contador);
+				//iniciamos la instacia del timer para que pueda rellenas las celdas de la matriz
+				timer.start();
+				cellsMap = RandomAutofill(cellsMap);
+				RandomAutofill(cellsMap);
 			}
 		});
 		
-		btnRandom.setBounds(230, 15, 91, 25);
-		panelBoton.add(btnRandom);
+		JButton btnStop = new JButton("Stop");
+		btnStop.setBackground(Color.YELLOW);
+		btnStop.setBounds(526, 37, 79, 25);
+		panelBoton.add(btnStop);
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				timer.stop();
+			}
+		});
 		
-		JLabel lblNewLabel = new JLabel("Width :");
-		lblNewLabel.setForeground(Color.YELLOW);
-		lblNewLabel.setBounds(350, 20, 70, 15);
-		panelBoton.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Height :");
-		lblNewLabel_1.setForeground(Color.YELLOW);
-		lblNewLabel_1.setBounds(450, 20, 70, 15);
-		panelBoton.add(lblNewLabel_1);
-		
-		
-		
-		JLabel lblCounter = new JLabel("Counter :");
-		lblCounter.setForeground(Color.YELLOW);
-		lblCounter.setBounds(633, 20, 1000, 15);
-		panelBoton.add(lblCounter);
-		
-		//juego.consolePrintBoard(rows,cols,game,contador);
-		
-
 		//Print en Menu
-		lblCounter.setText(String.valueOf("Counter : " + contador));
+		//contador de celulas vivas
+		lblCounter = new JLabel("Counter :");
+		lblCounter.setForeground(Color.YELLOW);
+		lblCounter.setBounds(681, 42, 91, 15);
+		panelBoton.add(lblCounter);
+		lblCounter.setText("Counter :"+String.valueOf(contador));
+		
+		//juego.consolePrintBoard(rows,cols,game,contador);		
+		
 	}
 	
-
-	public void generateRandomBoard(JPanel panelJuego, int rows, int cols) {
-		//Creem els taulell imaginari
-		panelJuego.removeAll();
+	public void juego(JPanel panelJuego, int rows, int cols) {
+		//panelJuego.removeAll();
 		panelJuego.setLayout(new GridLayout(rows, cols));
-
-		JPanel [][] tablero = new JPanel[rows][cols];
-		for(int i=0; i<rows; i++) {
-			for(int j=0; j<cols; j++) {
-			
-				//Para Random
-				int red = 1;
-				int blue = 0;
+		
+		//juego
+		cellsMap = new boolean [rows][cols];
+		//cellsMap = ClearCellsMap(cellsMap);
+		
+		//pintar de manera manual para el ejemplo de 3x3
+		//cellsMap[0][1] = true;
+		//cellsMap[1][1] = true;
+		//cellsMap[2][1] = true;
+		
+		//celulas
+		cells = new JButton[rows][cols];
+		
+		for(int i=0;i<rows;i++) {
+			for(int j=0;j<cols;j++) {
 				
-				int random_int = (int)Math.floor(Math.random()*(red-blue+1)+blue);
-				game[i][j]= random_int;
-				
-				//Inicialitzamos el tablero visual 
-				tablero[i][j] = new JPanel();
-				Border borde;
-				borde = BorderFactory.createLineBorder(Color.black);
-				tablero[i][j].setBorder(borde);
-				panelJuego.add(tablero[i][j]);
-				
-				if(random_int==1) {
-					tablero[i][j].setBackground(Color.red); 
-				}else {
-					tablero[i][j].setBackground(Color.blue); 
-				}
-				
-				panelJuego.setVisible(true);
-				
-			}
-		}
-		this.frame.setVisible(true);
-	
-	}
-	
-	public void ClearBoard(JPanel panelJuego) {
-		panelJuego.removeAll();
-
-		//Creem els taulell imaginari
-		JPanel [][] tablero = new JPanel[rows][cols];
-		for(int i=0; i<rows; i++) {
-			for(int j=0; j<cols; j++) {
-				int red = 1;
-				int blue = 0;
-			
-				game[i][j]= blue;
-				
-				
-				//Inicialitzamos el tablero visual 
-				tablero[i][j] = new JPanel();
-				Border borde;
-				borde = BorderFactory.createLineBorder(Color.black);
-				tablero[i][j].setBorder(borde);
-				panelJuego.add(tablero[i][j]);
-				
-				tablero[i][j].setBackground(Color.blue); 
+				//tablero de botones temporal
+				JButton temp = new JButton();
+				if(cellsMap[i][j]) {
+					temp.setBackground(Color.RED);
 					
-				panelJuego.setVisible(true);
+				}else {
+					temp.setBackground(Color.BLUE);
+				}
+				panelJuego.add(temp);
+				cells[i][j] = temp;
 			}
 		}
-		this.frame.setVisible(true);
+		
+		panelJuego.setVisible(true);
+		frame.setVisible(true);
+	}
 	
+	public void inicializar( ){
+		
+		//tiempo de movimientos por segundo (0,5 seg)
+		timer = new Timer(500, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//matriz Temporal
+				boolean[][] temp = new boolean[rows][cols];
+				
+				for(int i=0;i<rows;i++) {
+					for(int j=0;j<cols;j++) {
+						int count = countNeignours(i,j);
+				
+						
+						//la funcion de clickar y cambiar de estado aun no funciona
+						//pero este codigo va masomenos encaminado
+						
+						/*if(cells[i][j].isEnabled()) {
+							if(cellsMap[i][j]) {
+								cellsMap[i][j] = false;
+							}else {
+								cellsMap[i][j] = true;
+							}
+						}*/
+						
+	
+						//reglas del juego
+						if(cellsMap[i][j]) {
+							//celula viva, puede continuar con vida? (0-1)
+							if(count<2) {
+								//muere, porque no hay sufientes celulas vivas alrededor
+								temp[i][j]=false;
+							}
+							//celula viva, puede continuar con vida? (2-3)
+							if(count == 3 || count == 2) {
+								//continua con vida, hay sufientes celulas vivas alrededor
+								temp[i][j]=true;
+							}
+							//celula viva, puede continuar con vida? (+3)
+							if(count>3) {
+								//muere por sobrepoblacion
+								temp[i][j]=false;
+							}
+						}else {
+							//celula muerta, puede nacer? (3)
+							if(count == 3) {
+								//la celula nace, porque hay sufientes celulas vivas alrededor
+								temp[i][j]=true;
+							}
+						}
+					}
+				}
+				//cambiar el estado del tablero principal por el tablero temporal
+				cellsMap = temp;
+				contador=0;
+				//pintar las celulas de la matriz principal 
+				for(int i=0;i<rows;i++) {
+					for(int j=0;j<cols;j++) {
+						if(cellsMap[i][j]) {
+							cells[i][j].setBackground(Color.RED);
+							contador++;
+							
+						}else {
+							cells[i][j].setBackground(Color.BLUE);
+							
+						}
+					}
+				}				
+				lblCounter.setText("Counter :"+String.valueOf(contador));
+			}
+			
+		});
+
+		timer.stop();
+
+	}
+	
+	//metodo que cuenta el numero de celulas vecinas vivas
+	public int countNeignours(int x, int y) {
+		int count = 0;
+		
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				try {
+					if(cellsMap[i][j]) {
+						count++;
+						
+					}
+				}catch(Exception e) {}
+			}
+		}
+		if(cellsMap[x][y]) {
+			count--;	
+		}
+		
+		return count;
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {}
+
+	//metodo que rellena el tablero de manera aleatoria
+	public boolean[][] RandomAutofill(boolean[][]cellsMap) {
+		Random rnd = new Random();
+		for(int i=0;i<rows;i++) {
+			for(int j=0;j<cols;j++) {
+				cellsMap[i][j] = rnd.nextInt(100)<30;
+			}
+		}
+		return cellsMap;
+	}
+	
+	public boolean[][] ClearCellsMap(boolean[][]cellsMap){
+		for(int i=0;i<rows;i++) {
+			for(int j=0;j<cols;j++) {
+				cellsMap[i][j] = false;
+			}
+		}
+		return cellsMap;
+	}
 }
