@@ -323,7 +323,7 @@ public class Tablero extends JFrame implements ActionListener{
 		return cellsMap;
 	}
 	
-	//Mouse
+	PINTAR LAS CELDAS CON EL RATÓN
 	@Override
 	public void actionPerformed (ActionEvent e) {
 		// Invoked when the mouse button has been clicked (pressed and released) on a component
@@ -331,8 +331,8 @@ public class Tablero extends JFrame implements ActionListener{
 		JButton boton = (JButton)e.getSource();
 		String pepe= boton.getName();
 		
-		int i=Integer.parseInt(pepe.charAt(0)+"");
-		int j=Integer.parseInt(pepe.charAt(1)+"");
+		int i=Integer.parseInt(pepe.charAt(0)+"");			
+		int j=Integer.parseInt(pepe.charAt(1)+"");			
 			
 		if(cellsMap[i][j]) {
 			cellsMap[i][j]=false;
