@@ -329,10 +329,10 @@ public class Tablero extends JFrame implements ActionListener{
 		// Invoked when the mouse button has been clicked (pressed and released) on a component
 		
 		JButton boton = (JButton)e.getSource();
-		String pepe= boton.getName();
+		String xy= boton.getName();
 		
-		int i=Integer.parseInt(pepe.charAt(0)+"");			
-		int j=Integer.parseInt(pepe.charAt(1)+"");			
+		int i=Integer.parseInt(xy.charAt(0)+"");			
+		int j=Integer.parseInt(xy.charAt(1)+"");			
 			
 		if(cellsMap[i][j]) {
 			cellsMap[i][j]=false;
