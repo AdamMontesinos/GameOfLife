@@ -4,23 +4,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
+
 import java.util.Random;
+import java.awt.event.*;
 
 import javax.swing.JSpinner;
 import javax.swing.Timer;
 import javax.swing.JLabel;
 
-public class Tablero implements ActionListener{
-
+//public class Tablero implements ActionListener{
+public class Tablero extends JFrame implements ActionListener{
+	
 	private JFrame frame;
-	private JLabel lblCounter;
 	private int rows; 
 	private int cols;
-	private int contador;
+	private int contador=0;
 	private int[][] game;
 	boolean cellsMap[][];
 	JButton cells[][];
@@ -57,9 +57,7 @@ public class Tablero implements ActionListener{
 		
 		//inicializamos antes para evitar crear multiples instancias del timer
 		inicializar();
-		
 
-		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 805, 634);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -170,15 +168,18 @@ public class Tablero implements ActionListener{
 			}
 		});
 		
-		//Print en Menu
 		//contador de celulas vivas
-		lblCounter = new JLabel("Counter :");
+		JLabel lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
 		lblCounter.setBounds(681, 42, 91, 15);
 		panelBoton.add(lblCounter);
-		lblCounter.setText("Counter :"+String.valueOf(contador));
 		
-		//juego.consolePrintBoard(rows,cols,game,contador);		
+		//juego.consolePrintBoard(rows,cols,game,contador);
+		
+
+		//Print en Menu
+		lblCounter.setText(String.valueOf("Counter : " + contador));
+		
 		
 	}
 	
@@ -203,35 +204,39 @@ public class Tablero implements ActionListener{
 				
 				//tablero de botones temporal
 				JButton temp = new JButton();
+				temp.setName(""+i+j);
 				if(cellsMap[i][j]) {
 					temp.setBackground(Color.RED);
-					
 				}else {
 					temp.setBackground(Color.BLUE);
 				}
 				panelJuego.add(temp);
 				cells[i][j] = temp;
+				cells[i][j].addActionListener(this);
 			}
 		}
-		
 		panelJuego.setVisible(true);
 		frame.setVisible(true);
 	}
 	
-	public void inicializar( ){
+	public void inicializar(){
 		
 		//tiempo de movimientos por segundo (0,5 seg)
 		timer = new Timer(500, new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				//matriz Temporal
 				boolean[][] temp = new boolean[rows][cols];
 				
+				//System.out.println("You clicked the mouse");
+				//cells[rows][cols].setBackground(Color.red);
+				
 				for(int i=0;i<rows;i++) {
 					for(int j=0;j<cols;j++) {
 						int count = countNeignours(i,j);
-				
+
 						
 						//la funcion de clickar y cambiar de estado aun no funciona
 						//pero este codigo va masomenos encaminado
@@ -243,6 +248,8 @@ public class Tablero implements ActionListener{
 								cellsMap[i][j] = true;
 							}
 						}*/
+						
+						
 						
 	
 						//reglas del juego
@@ -273,29 +280,22 @@ public class Tablero implements ActionListener{
 				}
 				//cambiar el estado del tablero principal por el tablero temporal
 				cellsMap = temp;
-				contador=0;
+				
 				//pintar las celulas de la matriz principal 
 				for(int i=0;i<rows;i++) {
 					for(int j=0;j<cols;j++) {
 						if(cellsMap[i][j]) {
 							cells[i][j].setBackground(Color.RED);
-							contador++;
-							
 						}else {
 							cells[i][j].setBackground(Color.BLUE);
-							
 						}
 					}
-				}				
-				lblCounter.setText("Counter :"+String.valueOf(contador));
+				}
 			}
-			
+
 		});
-
 		timer.stop();
-
 	}
-	
 	//metodo que cuenta el numero de celulas vecinas vivas
 	public int countNeignours(int x, int y) {
 		int count = 0;
@@ -305,20 +305,17 @@ public class Tablero implements ActionListener{
 				try {
 					if(cellsMap[i][j]) {
 						count++;
-						
 					}
 				}catch(Exception e) {}
 			}
 		}
 		if(cellsMap[x][y]) {
-			count--;	
+			count--;
 		}
-		
 		return count;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {}
+	
 
 	//metodo que rellena el tablero de manera aleatoria
 	public boolean[][] RandomAutofill(boolean[][]cellsMap) {
@@ -339,4 +336,30 @@ public class Tablero implements ActionListener{
 		}
 		return cellsMap;
 	}
+	
+	//MOUSE
+
+	
+	@Override
+	public void actionPerformed (ActionEvent e) {
+		// Invoked when the mouse button has been clicked (pressed and released) on a component
+		
+		JButton boton = (JButton)e.getSource();
+		String pepe= boton.getName();
+		System.out.println("You clicked the mouse");
+		boton.setBackground(Color.red);
+		int i=Integer.parseInt(pepe.charAt(0)+"");
+		int j=Integer.parseInt(pepe.charAt(1)+"");
+			cellsMap[i][j]=true;
+		
+			
+		//if(cellsMap[3][3] = true ){
+			//boton.setBackground(Color.red);
+			//cellsMap[3][3] = false;
+		//}else{
+		//	cells[3][3].setBackground(Color.blue);
+		//	cellsMap[3][3] = true;
+		//}
+	}
+	
 }
