@@ -1,4 +1,3 @@
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -186,42 +185,42 @@ public class Tablero extends JFrame implements ActionListener{
 		cBSpeed.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(cBSpeed.getSelectedItem().equals("x0.25")) {
+				if(cBSpeed.getSelectedItem().equals("x2")) {
 					speed = 250;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x0.5")) {
+				}else if(cBSpeed.getSelectedItem().equals("x1.75")) {
 					speed = 500;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x0.75")) {
+				}else if(cBSpeed.getSelectedItem().equals("x1.5")) {
 					speed = 750;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x1")) {
+				}else if(cBSpeed.getSelectedItem().equals("x1.25")) {
 					speed = 1000;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x1.25")) {
+				}else if(cBSpeed.getSelectedItem().equals("x1")) {
 					speed = 1250;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x1.5")) {
+				}else if(cBSpeed.getSelectedItem().equals("x0.75")) {
 					speed = 1500;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x1.75")) {
+				}else if(cBSpeed.getSelectedItem().equals("0.5")) {
 					speed = 1750;
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}else if(cBSpeed.getSelectedItem().equals("x2")) {
+				}else if(cBSpeed.getSelectedItem().equals("x0.25")) {
 					speed = 2000;
 					timer.stop();
 			        timer.setDelay(speed);
