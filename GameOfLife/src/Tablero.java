@@ -1,14 +1,18 @@
-import java.awt.EventQueue;
 
+
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.Random;
+import javax.swing.JFileChooser;
 
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 import javax.swing.JSpinner;
 import javax.swing.Timer;
 import javax.swing.JLabel;
@@ -24,8 +28,9 @@ public class Tablero extends JFrame implements ActionListener{
 	boolean cellsMap[][];
 	JButton cells[][];
 	Timer timer = null;
-	Random rnd = new Random();
 	int speed = 1000; //velocidad por defecto en ms
+	private boolean[][] pattern;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,12 +53,16 @@ public class Tablero extends JFrame implements ActionListener{
 	public Tablero() {
 		initialize();
 	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {	
-		//inicializamos el timer antes para evitar crear multiples instancias del timer
-		inicializarTimer();
+	private void initialize() {
+		
+		//inicializamos antes para evitar crear multiples instancias del timer
+		inicializar();
+		
+
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 805, 634);
@@ -64,6 +73,8 @@ public class Tablero extends JFrame implements ActionListener{
 		panelJuego.setBounds(0, 0, 789, 502);
 		frame.getContentPane().add(panelJuego);
 		
+		
+		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
 		panelBoton.setBounds(0, 502, 789, 93);
@@ -71,18 +82,19 @@ public class Tablero extends JFrame implements ActionListener{
 		frame.getContentPane().add(panelBoton);
 		panelBoton.setLayout(null);
 		
+		
 		//spinners para escoger el numero de celulas
 		JSpinner spinnerWidth = new JSpinner();
 		spinnerWidth.setBounds(50, 15, 35, 25);
 		panelBoton.add(spinnerWidth);
-		//valor por defecto para el tamaño
-		spinnerWidth.setValue(30);
+		//valor por defecto para el tama�o
+		spinnerWidth.setValue(3);
 		
 		JSpinner spinnerHeight = new JSpinner();
 		spinnerHeight.setBounds(138, 15, 35, 25);
 		panelBoton.add(spinnerHeight);
 		//valor por defecto para el tamaño
-		spinnerHeight.setValue(30);
+		spinnerHeight.setValue(3);
 		
 		//Label de los spinners
 		JLabel lblWidth = new JLabel("Width :");
@@ -94,7 +106,10 @@ public class Tablero extends JFrame implements ActionListener{
 		lblHeight.setForeground(Color.YELLOW);
 		lblHeight.setBounds(95, 20, 70, 15);
 		panelBoton.add(lblHeight);
-
+		
+		
+		
+		
 		//Botones y cosas
 		
 		//btnCreateUniverse creara el tablero, no lo iniciara
@@ -112,9 +127,10 @@ public class Tablero extends JFrame implements ActionListener{
 			}
 		});
 		
+		
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
-		btnPlay.setBounds(312, 37, 58, 25);
+		btnPlay.setBounds(220, 37, 64, 25);
 		panelBoton.add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -124,7 +140,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
-		btnClear.setBounds(380, 37, 64, 25);
+		btnClear.setBounds(314, 37, 71, 25);
 		panelBoton.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -134,9 +150,10 @@ public class Tablero extends JFrame implements ActionListener{
 			}
 		});
 		
+		
 		JButton btnRandom = new JButton("Random");
 		btnRandom.setBackground(Color.YELLOW);
-		btnRandom.setBounds(454, 37, 91, 25);
+		btnRandom.setBounds(411, 37, 91, 25);
 		panelBoton.add(btnRandom);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -149,7 +166,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnStop = new JButton("Stop");
 		btnStop.setBackground(Color.YELLOW);
-		btnStop.setBounds(555, 37, 70, 25);
+		btnStop.setBounds(526, 37, 79, 25);
 		panelBoton.add(btnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -157,6 +174,7 @@ public class Tablero extends JFrame implements ActionListener{
 			}
 		});
 		
+		//Print en Menu
 		//contador de celulas vivas
 		lblCounter = new JLabel("Counter :");
 		lblCounter.setForeground(Color.YELLOW);
@@ -228,9 +246,49 @@ public class Tablero extends JFrame implements ActionListener{
 				}	
 			}
 		});
+		
+		JButton btnOpenRle = new JButton("Open RLE");
+		btnOpenRle.setBounds(490, 0, 117, 25);
+		panelBoton.add(btnOpenRle);
+		
+		btnOpenRle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+	            int option = fileChooser.showOpenDialog(frame);
+	            if(option == JFileChooser.APPROVE_OPTION){
+	               File file = fileChooser.getSelectedFile();
+	               
+	               rle rle = new rle(file.getPath());
+	               
+	               try {
+					pattern = rle.getPattern();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	               
+	               System.out.println("" + pattern.length);
+	               
+	               for(int i = 0; i<pattern.length; i++) {
+	            	   for (int j=0; j<pattern[0].length; j++) {
+	            		   cellsMap[i][j]=pattern[i][j];
+	            	   }
+	               }
+					
+	               
+	               //System.out.println("File Selected: " + file.getPath() + "/" + file.getName());
+	            }else{
+	               System.out.println("Open command canceled");
+	            }
+				
+			}
+		});
+		//juego.consolePrintBoard(rows,cols,game,contador);		
+		
 	}
 	
 	public void juego(JPanel panelJuego, int rows, int cols) {
+		//panelJuego.removeAll();
 		panelJuego.setLayout(new GridLayout(rows, cols));
 		
 		//juego
@@ -252,10 +310,9 @@ public class Tablero extends JFrame implements ActionListener{
 				JButton temp = new JButton();
 				temp.setName(""+i+j);
 				
-				Random rnd =null;
 				if(cellsMap[i][j]) {
-					//temp.setBackground(new Color(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255)));
 					temp.setBackground(Color.RED);
+					
 				}else {
 					temp.setBackground(Color.BLUE);
 				}
@@ -264,14 +321,15 @@ public class Tablero extends JFrame implements ActionListener{
 				cells[i][j].addActionListener(this);
 			}
 		}
+		
 		panelJuego.setVisible(true);
 		frame.setVisible(true);
 	}
 	
-	public void inicializarTimer(){
+	public void inicializar( ){
 		
 		//tiempo de movimientos por segundo (0,5 seg)
-		timer = new Timer(speed, new ActionListener() {
+		timer = new Timer(300, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -315,19 +373,22 @@ public class Tablero extends JFrame implements ActionListener{
 				for(int i=0;i<rows;i++) {
 					for(int j=0;j<cols;j++) {
 						if(cellsMap[i][j]) {
-							//cells[i][j].setBackground(new Color(rnd.nextInt(255),rnd.nextInt(255),rnd.nextInt(255)));
 							cells[i][j].setBackground(Color.RED);
-							contador++;					
+							contador++;
+							
 						}else {
 							cells[i][j].setBackground(Color.BLUE);
+							
 						}
 					}
-				}
-				//contador que muetra el numero de celulas vivas
+				}				
 				lblCounter.setText("Counter :"+String.valueOf(contador));
 			}
+			
 		});
+
 		timer.stop();
+
 	}
 	
 	//metodo que cuenta el numero de celulas vecinas vivas
@@ -338,19 +399,23 @@ public class Tablero extends JFrame implements ActionListener{
 			for(int j=y-1;j<=y+1;j++) {
 				try {
 					if(cellsMap[i][j]) {
-						count++;	
+						count++;
+						
 					}
 				}catch(Exception e) {}
 			}
 		}
 		if(cellsMap[x][y]) {
-			count--;
+			count--;	
 		}
+		
 		return count;
 	}
+
+
 	//metodo que rellena el tablero de manera aleatoria
 	public boolean[][] RandomAutofill(boolean[][]cellsMap) {
-		//Random rnd = new Random();
+		Random rnd = new Random();
 		for(int i=0;i<rows;i++) {
 			for(int j=0;j<cols;j++) {
 				cellsMap[i][j] = rnd.nextInt(100)<30;
@@ -358,7 +423,7 @@ public class Tablero extends JFrame implements ActionListener{
 		}
 		return cellsMap;
 	}
-	//metodo que limpia todo el tablero
+	
 	public boolean[][] ClearCellsMap(boolean[][]cellsMap){
 		for(int i=0;i<rows;i++) {
 			for(int j=0;j<cols;j++) {
@@ -367,14 +432,17 @@ public class Tablero extends JFrame implements ActionListener{
 		}
 		return cellsMap;
 	}
-	//Mouse
+	
+	//PINTAR LAS CELDAS CON EL RATÓN
 	@Override
 	public void actionPerformed (ActionEvent e) {
 		// Invoked when the mouse button has been clicked (pressed and released) on a component
+		
 		JButton boton = (JButton)e.getSource();
-		String pepe= boton.getName();
-		int i=Integer.parseInt(pepe.charAt(0)+"");
-		int j=Integer.parseInt(pepe.charAt(1)+"");
+		String xy= boton.getName();
+		
+		int i=Integer.parseInt(xy.charAt(0)+"");			
+		int j=Integer.parseInt(xy.charAt(1)+"");			
 			
 		if(cellsMap[i][j]) {
 			cellsMap[i][j]=false;
