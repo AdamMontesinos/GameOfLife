@@ -74,7 +74,6 @@ public class Tablero extends JFrame implements ActionListener{
 		frame.getContentPane().add(panelJuego);
 		
 		
-		
 		//Paneles de Juego y Menu
 		JPanel panelBoton = new JPanel();
 		panelBoton.setBounds(0, 502, 789, 93);
@@ -130,7 +129,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnPlay = new JButton("Play");
 		btnPlay.setBackground(Color.YELLOW);
-		btnPlay.setBounds(220, 37, 64, 25);
+		btnPlay.setBounds(350, 20, 64, 25);
 		panelBoton.add(btnPlay);
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -140,7 +139,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.YELLOW);
-		btnClear.setBounds(314, 37, 71, 25);
+		btnClear.setBounds(440, 20, 71, 25);
 		panelBoton.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -153,7 +152,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnRandom = new JButton("Random");
 		btnRandom.setBackground(Color.YELLOW);
-		btnRandom.setBounds(411, 37, 91, 25);
+		btnRandom.setBounds(370, 55, 91, 25);
 		panelBoton.add(btnRandom);
 		btnRandom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -166,7 +165,7 @@ public class Tablero extends JFrame implements ActionListener{
 		
 		JButton btnStop = new JButton("Stop");
 		btnStop.setBackground(Color.YELLOW);
-		btnStop.setBounds(526, 37, 79, 25);
+		btnStop.setBounds(540, 20, 79, 25);
 		panelBoton.add(btnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -248,7 +247,8 @@ public class Tablero extends JFrame implements ActionListener{
 		});
 		
 		JButton btnOpenRle = new JButton("Open RLE");
-		btnOpenRle.setBounds(490, 0, 117, 25);
+		btnOpenRle.setBackground(Color.YELLOW);
+		btnOpenRle.setBounds(490, 55, 117, 25);
 		panelBoton.add(btnOpenRle);
 		
 		btnOpenRle.addActionListener(new ActionListener() {
