@@ -50,21 +50,20 @@ The initial pattern constitutes the seed of the system. The first generation is 
 	
 	· Stop/Play
 	
+	· Start/Stop of game
 	
-  NOT DONE :
-  
-  	· Start/Stop of game
-  
   	· Change speed of game
-	
+		
 	· Paint boxes
 	
 	· Import/Export files
+	
+	
+  NOT DONE :
+	
   
   PROBLEMS : 
-  
-  	· Structure problems with Start/Play the game
-	
+
   
   
 # ORGANIZATION :
