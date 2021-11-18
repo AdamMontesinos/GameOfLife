@@ -1,5 +1,3 @@
-
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -242,7 +240,7 @@ public class Tablero extends JFrame implements ActionListener{
 					timer.stop();
 			        timer.setDelay(speed);
 			        timer.start();
-				}	
+				}
 			}
 		});
 		
